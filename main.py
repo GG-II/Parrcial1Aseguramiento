@@ -1,12 +1,33 @@
-from src.Entities.ItemMenu import ItemMenu
+from src.Entities.Pizza import Pizza
+from src.Entities.Bebida import Bebida
+from src.Interfaces.Comida import Comida
 
-class Bebida(ItemMenu):
-    def __init__(self, nombre: str, precio: float, volumen_ml: int):
-        super().__init__(nombre, precio)
-        self._volumen_ml = volumen_ml
+def main():
+    print("=== Sistema de Pizzería (Demo) ===\n")
 
-    def get_volumen_ml(self) -> int:
-        return self._volumen_ml
+    # Crear algunos productos
+    pizza = Pizza("Pepperoni", 12.50, ["queso", "pepperoni", "salsa"], False)
+    pizza_veg = Pizza("Vegetariana", 11.00, ["queso", "champiñones", "pimientos", "cebolla"], True)
+    bebida = Bebida("Coca Cola", 2.00, 500)
 
-    def get_descripcion(self) -> str:
-        return f"Bebida {self.get_nombre()} de {self._volumen_ml}ml. Precio: ${self.get_precio():.2f}"
+    # Mostrar menú
+    print("Menú:")
+    print("-" * 40)
+    for producto in [pizza, pizza_veg, bebida]:
+        print(f"- {producto.get_descripcion()}")
+        if isinstance(producto, Comida):
+            print(f"  Es vegetariana: {'Sí' if producto.es_vegetariana() else 'No'}")
+        if isinstance(producto, Bebida):
+            print(f"  Volumen: {producto.get_volumen_ml()} ml")
+        print("-" * 40)
+
+    # Demostración de cambio de precio
+    print("\nActualización de precios:")
+    print(f"  Precio Coca Cola (antes): Q{bebida.get_precio():.2f}")
+    bebida.set_precio(2.25)
+    print(f"  Precio Coca Cola (ahora):  Q{bebida.get_precio():.2f}")
+
+    print(f"\nGracias por usar la demo de la pizzería.")
+
+if __name__ == "__main__":
+    main()
